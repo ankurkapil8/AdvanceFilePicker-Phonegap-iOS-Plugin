@@ -1,7 +1,7 @@
-FilePicker Phonegap iOS Plugin
+AdvanceFilePicker Phonegap iOS Plugin
 ================================
 
-This plugin makes possible to pick files from iCloud or other document providers using a native Document Picker
+This plugin makes possible to pick files from Camera, Photo Gallery, iCloud or other document providers using a native Document Picker
 
 The file is copied to a temp folder, if you want to keep it, copy the file to a persistent location
 
