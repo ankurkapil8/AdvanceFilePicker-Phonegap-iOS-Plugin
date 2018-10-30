@@ -1,0 +1,31 @@
+{
+  "name": "cordova-plugin-advance-filepicker",
+  "version": "0.0.1",
+  "description": "\n    This plugin makes possible to pick files from iCloud, Camera, Photo Gallery or other document providers\n  ",
+  "cordova": {
+    "id": "cordova-plugin-advance-filepicker",
+    "platforms": [
+      "ios"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ankurkapil8/AdvanceFilePicker-Phonegap-iOS-Plugin.git"
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-ios"
+  ],
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.0.0"
+    }
+  ],
+  "author": "ankurkapil",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ankurkapil8/AdvanceFilePicker-Phonegap-iOS-Plugin/issues"
+  },
+  "homepage": "https://github.com/ankurkapil8/AdvanceFilePicker-Phonegap-iOS-Plugin#readme"
+}
