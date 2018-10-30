@@ -12,7 +12,7 @@
 
   <license>MIT</license>
 
-  <js-module src="www/AdvanceFilePicker.js" name="FilePicker">
+  <js-module src="www/AdvanceFilePicker.js" name="AdvanceFilePicker">
     <clobbers target="AdvanceFilePicker"/>
   </js-module>
 
