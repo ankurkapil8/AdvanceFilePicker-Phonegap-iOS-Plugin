@@ -31,7 +31,7 @@ You can also open the Xcode project on platforms/iOs folder clicking the .xcodep
 Installation:
 ============
 
-`cordova plugin add cordova-plugin-filepicker`
+`cordova plugin add cordova-plugin-advance-filepicker`
 
 
 Usage:
