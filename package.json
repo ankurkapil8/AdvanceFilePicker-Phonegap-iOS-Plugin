@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-advance-filepicker",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "description": "\n    This plugin makes possible to pick files from iCloud, Camera, Photo Gallery or other document providers\n  ",
   "cordova": {
     "id": "cordova-plugin-advance-filepicker",
