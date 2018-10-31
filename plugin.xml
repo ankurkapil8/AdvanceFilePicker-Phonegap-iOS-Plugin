@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
         id="cordova-plugin-advance-filepicker"
-        version="1.0.2">
+        version="1.0.3">
 
   <name>Advance File Picker</name>
   <author>AnkurKapil</author>
