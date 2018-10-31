@@ -44,7 +44,7 @@ Only iOS 8 and higher support picking files from document providers, you can che
 Note that the global FilePicker object is not available before 'deviceready' has fired.
 
 ```
-FilePicker.isAvailable(function (avail) {
+AdvanceFilePicker.isAvailable(function (avail) {
   alert(avail ? "YES" : "NO");
 });
 ```
@@ -55,7 +55,7 @@ Pick a file
 If you don't pass any params, public.data UTI will be used
 
 ```
-FilePicker.pickFile(successCallback,errorCallback);
+AdvanceFilePicker.pickFile(successCallback,errorCallback);
 function successCallback(path) {
   alert("You picked this file: " + path);
 }
@@ -63,13 +63,13 @@ function successCallback(path) {
 
 You can pass the UTI as string
 ```
-FilePicker.pickFile(successCallback,errorCallback,"public.data");
+AdvanceFilePicker.pickFile(successCallback,errorCallback,"public.data");
 ```
 
 If you want to pass more than one UTI you can pass an array of strings
 ```
 var utis = ["public.data", "public.audio"];
-FilePicker.pickFile(successCallback,errorCallback,utis);
+AdvanceFilePicker.pickFile(successCallback,errorCallback,utis);
 ```
 
 Set the position of the rectangle where the file picker should show up.
@@ -80,7 +80,7 @@ position.x = 100;
 position.y = 100;
 position.width = 10;
 position.height = 10;
-FilePicker.pickFile(successCallback,errorCallback,utis,position);
+AdvanceFilePicker.pickFile(successCallback,errorCallback,utis,position);
 ```
 
 successCallback will bring the file url as string
