@@ -1,14 +1,13 @@
 //
-//  AdvanceFilePicker.m
+//  FilePicker.m
 //
-//  Created by @ankurKapil
+//  Created by @jcesarmobile
 //
 //
 
-#import "AdvanceFilePicker.h"
+#import "FilePicker.h"
 
-@implementation AdvanceFilePicker
-//: id <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@implementation FilePicker
 
 - (void)isAvailable:(CDVInvokedUrlCommand*)command
 {
@@ -23,7 +22,7 @@
     BOOL supported = YES;
     NSArray * UTIsArray = nil;
     CGRect frame = CGRectZero;
-    
+
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         if(command.arguments.count > 1) {
             NSDictionary * frameValues = [command.arguments objectAtIndex:1];
@@ -36,7 +35,7 @@
             }
         }
     }
-    
+
     if ([UTIs isEqual:[NSNull null]]) {
         UTIsArray =  @[@"public.data"];
     } else if ([UTIs isKindOfClass:[NSString class]]){
@@ -52,7 +51,7 @@
         supported = NO;
         [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"your device can't show the file picker"] callbackId:self.command.callbackId];
     }
-    
+
     if (supported) {
         self.pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_NO_RESULT];
         [self.pluginResult setKeepCallbackAsBool:YES];
@@ -70,6 +69,7 @@
 
 -(void)documentMenuWasCancelled:(UIDocumentMenuViewController *)documentMenu
 {
+
     self.pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"canceled"];
     [self.pluginResult setKeepCallbackAsBool:NO];
     [self.commandDelegate sendPluginResult:self.pluginResult callbackId:self.command.callbackId];
@@ -83,7 +83,7 @@
     [self.commandDelegate sendPluginResult:self.pluginResult callbackId:self.command.callbackId];
     
 }
-
+    
 - (void)documentPickerWasCancelled:(UIDocumentPickerViewController *)controller
 {
     self.pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"canceled"];
@@ -93,40 +93,64 @@
 
 - (void)displayDocumentPicker:(NSArray *)UTIs withSenderRect:(CGRect)senderFrame
 {
-    UIDocumentMenuViewController * vc = nil;
-    //    if (!IsAtLeastiOSVersion(@"11.0")) {
-    vc = [[UIDocumentMenuViewController alloc] initWithDocumentTypes:UTIs inMode:UIDocumentPickerModeImport];
-    ((UIDocumentMenuViewController *)vc).delegate = self;
-    vc.popoverPresentationController.sourceView = self.viewController.view;
-    //******* Custom gallery / camera option added over UIDocumentMenuViewController *******
-    [vc addOptionWithTitle:@"Gallery" image: [UIImage imageNamed:@"gallery"] order:UIDocumentMenuOrderFirst handler:^{
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    // Camera
+    UIAlertAction *alertCamera = [UIAlertAction actionWithTitle:@"Camera" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+        picker.delegate = self;
+        picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        [self.viewController presentViewController:picker animated:YES completion:NULL];
+    }];
+    [alertCamera setValue:[UIImage imageNamed:@"camera"] forKey:@"image"];
+    [alert addAction:alertCamera];
+    
+    // Gallery
+    UIAlertAction *alertGallery = [UIAlertAction actionWithTitle:@"Gallery"  style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
         UIImagePickerController *picker = [[UIImagePickerController alloc] init];
         picker.delegate = self;
         picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         [self.viewController presentViewController:picker animated:YES completion:NULL];
     }];
-    
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        [vc addOptionWithTitle:@"Camera" image: [UIImage imageNamed:@"camera"] order:UIDocumentMenuOrderFirst handler:^{
-            UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-            picker.delegate = self;
-            picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-            [self.viewController presentViewController:picker animated:YES completion:NULL];
-        }];
-    }
-    //*******
-    if (!CGRectEqualToRect(senderFrame, CGRectZero)) {
-        vc.popoverPresentationController.sourceRect = senderFrame;
-    }
-    //    } else {
-    //        vc = [[UIDocumentPickerViewController alloc] initWithDocumentTypes:UTIs inMode:UIDocumentPickerModeImport];
-    //        ((UIDocumentPickerViewController *)vc).delegate = self;
-    //        vc.modalPresentationStyle = UIModalPresentationFullScreen;
-    //    }
-    [self.viewController presentViewController:vc animated:YES completion:nil];
-}
+    [alertGallery setValue:[UIImage imageNamed:@"gallery"] forKey:@"image"];
 
-//MARK:- Image Picker Controller Delegate
+    [alert addAction:alertGallery];
+    
+    // iCloud
+    UIAlertAction *alertIcloud = [UIAlertAction actionWithTitle:@"Browse" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        UIViewController *vc = [[UIDocumentPickerViewController alloc] initWithDocumentTypes:UTIs inMode:UIDocumentPickerModeImport];
+        ((UIDocumentPickerViewController *)vc).delegate = self;
+        vc.modalPresentationStyle = UIModalPresentationFullScreen;
+        [self.viewController presentViewController:vc animated:YES completion:nil];
+    }];
+    [alertIcloud setValue:[UIImage imageNamed:@"browse"] forKey:@"image"];
+    [alert addAction:alertIcloud];
+    
+    
+    
+    // cancel
+    [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+
+
+    
+
+    
+    [self.viewController presentViewController:alert animated:YES completion:nil];
+    
+//    if (!IsAtLeastiOSVersion(@"11.0")) {
+//        vc = [[UIDocumentMenuViewController alloc] initWithDocumentTypes:UTIs inMode:UIDocumentPickerModeImport];
+//        ((UIDocumentMenuViewController *)vc).delegate = self;
+//        vc.popoverPresentationController.sourceView = self.viewController.view;
+//        if (!CGRectEqualToRect(senderFrame, CGRectZero)) {
+//            vc.popoverPresentationController.sourceRect = senderFrame;
+//        }
+//    } else {
+//        vc = [[UIDocumentPickerViewController alloc] initWithDocumentTypes:UTIs inMode:UIDocumentPickerModeImport];
+//        ((UIDocumentPickerViewController *)vc).delegate = self;
+//        vc.modalPresentationStyle = UIModalPresentationFullScreen;
+//    }
+//    [self.viewController presentViewController:vc animated:YES completion:nil];
+}
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIImage *image = info[UIImagePickerControllerOriginalImage];

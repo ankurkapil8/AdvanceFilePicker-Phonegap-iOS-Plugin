@@ -1,14 +1,14 @@
 //
-//  AdvanceFilePicker.h
+//  FilePicker.h
 //
-//  Created by @ankurKapil
+//  Created by @jcesarmobile
 //
 //
 
 #import <Foundation/Foundation.h>
 #import <Cordova/CDVPlugin.h>
 
-@interface AdvanceFilePicker : CDVPlugin <UIDocumentMenuDelegate,UIDocumentPickerDelegate>
+@interface FilePicker : CDVPlugin <UIDocumentMenuDelegate,UIDocumentPickerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (strong, nonatomic) CDVPluginResult * pluginResult;
 @property (strong, nonatomic) CDVInvokedUrlCommand * command;
